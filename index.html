@@ -143,9 +143,6 @@
   .actions .cta { margin-top: 0; }
   .cta.ghost { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 2px rgba(254,255,247,.55); text-decoration: none; }
   .cta.ghost:hover { background: rgba(254,255,247,.1); }
-  .share { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 15px; color: rgba(254,255,247,.7); }
-  .share a { color: var(--cream); font-weight: 700; text-decoration: none; padding: 7px 14px; border-radius: 999px; background: rgba(254,255,247,.12); }
-  .share a:hover { background: rgba(254,255,247,.22); }
   .err { position: fixed; inset: 0; display: none; place-items: center; text-align: center; padding: 24px; font-size: 18px; }
 
   @media (max-width: 640px) {
@@ -206,11 +203,6 @@
     <div class="actions">
       <button class="cta" id="againBtn">Fly again</button>
       <a class="cta ghost" id="siteBtn" href="https://gigapay.com/?utm_source=gigapay-flow&amp;utm_medium=game&amp;utm_campaign=gigapay-flow" target="_blank" rel="noopener">Visit gigapay.com</a>
-    </div>
-    <div class="share">
-      <span>Challenge your network</span>
-      <a id="shareIn" href="#" target="_blank" rel="noopener">Share on LinkedIn</a>
-      <a id="shareX" href="#" target="_blank" rel="noopener">Post on X</a>
     </div>
   </div>
 </section>
@@ -696,11 +688,6 @@ function resumeGame() { if (G.state !== 'paused') return; G.state = 'play'; show
 function endGame() {
   G.state = 'dying'; G.dying = 1.3; music.volume = 0.35;
 }
-function shareUrl() {
-  const m = document.querySelector('meta[property="og:url"]');
-  const c = m && m.content;
-  return c && c.indexOf('YOUR-SITE-URL') === -1 ? c : location.href.split('#')[0];
-}
 function showOver() {
   G.state = 'over';
   const isBest = G.score > G.best;
@@ -709,10 +696,6 @@ function showOver() {
   $('bestVal').textContent = G.best.toLocaleString('en-US');
   $('coinVal').textContent = G.coins; $('loopVal').textContent = G.loops;
   $('newBest').hidden = !isBest || G.score === 0;
-  const url = shareUrl();
-  const txt = 'I scored ' + G.score.toLocaleString('en-US') + ' in Gigapay Flow ✈️ Can you beat it?';
-  $('shareX').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(txt) + '&url=' + encodeURIComponent(url);
-  $('shareIn').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
   $('hud').classList.remove('on'); $('hint').classList.remove('on'); showScreen('overScreen'); $('againBtn').focus();
 }
 
